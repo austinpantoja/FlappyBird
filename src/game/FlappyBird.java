@@ -43,6 +43,7 @@ public class FlappyBird implements Runnable {
         frameContents.add(canvas);
 
         // The mouse adapter and key adapter should be there own class in the real thing
+        // Click or press space for the bird to "flap"
         canvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
