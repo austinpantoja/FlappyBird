@@ -62,8 +62,18 @@ public class GameImages {
     }
 
 
+    // Checks to see if the bird died
     protected boolean deathCheck() {
+        // Checking if Bird collided with ground
         if (images.get(3).y + images.get(3).height > images.get(4).y) return true;
+        // Checking if Bird collided with pipes at index 2
+        if (images.get(3).x + images.get(3).width > images.get(2).x && images.get(3).x < images.get(2).x + images.get(2).width)
+            if (images.get(3).y < images.get(2).y + 450 || images.get(3).y + images.get(3).height > images.get(2).y + 600)
+                return true;
+        // Checking if Bird collided with pipes at index 1
+        if (images.get(3).x + images.get(3).width > images.get(1).x && images.get(3).x < images.get(1).x + images.get(1).width)
+            if (images.get(3).y < images.get(1).y + 450 || images.get(3).y + images.get(3).height > images.get(1).y + 600)
+                return true;
         return false;
     }
 
