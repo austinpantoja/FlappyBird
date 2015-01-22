@@ -14,12 +14,7 @@ public class Background extends Sprite {
     }
 
 
-    public void update(int dt) {
-        // objects.Background doesn't do anything on update
-    }
+    public void update(int dt) {} //Background doesn't do anything on update
 
-
-    public void flap() {
-        // objects.Background doesn't flap
-    }
+    public void flap() {} //Background doesn't flap
 }

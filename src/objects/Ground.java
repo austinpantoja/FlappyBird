@@ -5,7 +5,8 @@ package objects;
  */
 public class Ground extends Sprite {
 
-    int velocity;
+    // velocity gives the amount of pixels shifted every time update is called
+    private int velocity;
 
     // xpos = 0 or 1
     // This signifies whether it is the 1st or 2nd instance of ground
@@ -22,12 +23,10 @@ public class Ground extends Sprite {
     }
 
 
-    @Override
     public void update(int dt) {
         x += velocity;
         if (x < -1*width) x += 2*width;
     }
 
-    @Override
     public void flap() {} //objects.Ground doesn't flap
 }
