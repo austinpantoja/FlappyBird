@@ -60,7 +60,7 @@ public class FlappyBird implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null); // Places JFrame in center of screen
+        frame.setLocationRelativeTo(null); // Places JFrame in the center of screen
         frame.setVisible(true);
 
         canvas.createBufferStrategy(2);
