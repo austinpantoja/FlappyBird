@@ -1,3 +1,5 @@
+package objects;
+
 /**
  * Created by austin on 1/21/15.
  */
@@ -33,7 +35,7 @@ public class Bird extends Sprite {
     }
 
 
-    protected void flap() {
+    public void flap() {
         velocity = (velocity >= 0) ? flapVelocity : velocity+flapVelocity;
     }
 }

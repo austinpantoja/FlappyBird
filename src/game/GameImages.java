@@ -1,3 +1,7 @@
+package game;
+
+import objects.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -14,7 +18,7 @@ public class GameImages {
 
     public GameImages() {
         //Load all game images here
-        //The image files themselves are loaded from the Sprite
+        //The image files themselves are loaded from the objects.Sprite
         images = new ArrayList<Sprite>();
         images.add(new Background("img/background.png"));
         images.add(new Bird("img/bird.png"));
@@ -25,7 +29,7 @@ public class GameImages {
     }
 
 
-    // Updates all Sprite instances by looping through the images array
+    // Updates all objects.Sprite instances by looping through the images array
     protected void update(int dt) {
         for (Sprite sprite : images) {
             sprite.update(dt);

@@ -1,3 +1,5 @@
+package game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -26,7 +28,7 @@ public class FlappyBird implements Runnable {
     public FlappyBird() {
         running = true;
         gameImages = new GameImages();
-        frame = new JFrame("Crappy Bird"); //I'll admit I stole this name from someone else on the internet
+        frame = new JFrame("Crappy objects.Bird"); //I'll admit I stole this name from someone else on the internet
 
         JPanel frameContents = (JPanel) frame.getContentPane();
         frameContents.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -105,7 +107,7 @@ public class FlappyBird implements Runnable {
 
 
 
-    // All main does is start a thread that runs an instance of FlappyBird
+    // All main does is start a thread that runs an instance of game.FlappyBird
     public static void main(String[] args) {
         Thread thread = new Thread(new FlappyBird());
         thread.start();

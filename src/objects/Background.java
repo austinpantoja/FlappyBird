@@ -1,3 +1,5 @@
+package objects;
+
 /**
  * Created by austin on 1/21/15.
  */
@@ -13,11 +15,11 @@ public class Background extends Sprite {
 
 
     public void update(int dt) {
-        // Background doesn't do anything on update
+        // objects.Background doesn't do anything on update
     }
 
 
     public void flap() {
-        // Background doesn't flap
+        // objects.Background doesn't flap
     }
 }

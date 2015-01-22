@@ -1,3 +1,5 @@
+package objects;
+
 /**
  * Created by austin on 1/21/15.
  */
@@ -21,11 +23,11 @@ public class Ground extends Sprite {
 
 
     @Override
-    protected void update(int dt) {
+    public void update(int dt) {
         x += velocity;
         if (x < -1*width) x += 2*width;
     }
 
     @Override
-    protected void flap() {} //Ground doesn't flap
+    public void flap() {} //objects.Ground doesn't flap
 }
