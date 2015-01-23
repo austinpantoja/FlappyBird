@@ -22,7 +22,6 @@ public class Pipes extends EnvironmentSprite {
         x = 450;
         setRandomY();
         velocity = -2;
-
     }
 
 
