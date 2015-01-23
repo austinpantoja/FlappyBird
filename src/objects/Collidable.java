@@ -1,5 +1,6 @@
 package objects;
 
+
 /**
  * Created by austin on 1/23/15.
  * Ground and Pipes extend EnvironmentSprite
@@ -9,13 +10,11 @@ package objects;
  */
 
 
-public abstract class EnvironmentSprite extends Sprite {
+public abstract class Collidable extends Sprite {
 
-    protected int velocity;
+    protected static final int velocity = -2;
 
     public abstract void update();
-
     public abstract void birdCollided(Bird bird);
-
     public abstract void reset(int index);
 }

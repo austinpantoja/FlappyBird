@@ -72,7 +72,9 @@ public class FlappyBird implements Runnable {
 
     // Contains the game running loop that continuously calls render and update when appropriate
     public void run() {
-        long currentTime, lastTime = System.currentTimeMillis(), delta = 1000/UPS;
+        long currentTime, lastTime, delta;
+        lastTime = System.currentTimeMillis();
+        delta = 1000/UPS;
 
         while (running) {
             currentTime = System.currentTimeMillis();
@@ -96,7 +98,7 @@ public class FlappyBird implements Runnable {
 
 
 
-    // The images themselves are drawn on in the GameImages class
+    // The images themselves are drawn on in the Sprite class
     public void render() {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT); //Clears the previous frame

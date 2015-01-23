@@ -6,7 +6,7 @@ import java.awt.*;
  * Created by austin on 1/21/15.
  */
 
-public class Ground extends EnvironmentSprite {
+public class Ground extends Collidable {
 
 
     // Used for the first Ground instance in GameImages
@@ -15,7 +15,6 @@ public class Ground extends EnvironmentSprite {
         readImage(fileName);
         width = image.getWidth(null);
         height = image.getHeight(null);
-        velocity = -2;
         x = 0;
         y = 600;
     }
@@ -28,10 +27,12 @@ public class Ground extends EnvironmentSprite {
         image = img;
         width = image.getWidth(null);
         height = image.getHeight(null);
-        velocity = -2;
         x = width;
         y = 600;
     }
+
+
+
 
 
 
@@ -52,6 +53,10 @@ public class Ground extends EnvironmentSprite {
         }
     }
 
+
+    public Image getImage() {
+        return image;
+    }
 
     // Resets the instances of GameImages after the bird has died
     // index 0 means that it is the 1st instance of Ground in GameImages

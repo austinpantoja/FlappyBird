@@ -7,10 +7,10 @@ import java.util.Random;
  * Created by austin on 1/21/15.
  */
 
-public class Pipes extends EnvironmentSprite {
+public class Pipes extends Collidable {
 
     // Used to assign random y values for pipes
-    private static Random random = new Random(System.currentTimeMillis());
+    private static final Random random = new Random(System.currentTimeMillis());
 
 
     // Constructor is used to create the first instance of pipes in game images
@@ -21,7 +21,6 @@ public class Pipes extends EnvironmentSprite {
         height = image.getHeight(null);
         x = 450;
         setRandomY();
-        velocity = -2;
     }
 
 
@@ -34,7 +33,6 @@ public class Pipes extends EnvironmentSprite {
         height = image.getHeight(null);
         setRandomY();
         x = 3*450/2 + width/2;
-        velocity = -2;
     }
 
 
@@ -61,6 +59,10 @@ public class Pipes extends EnvironmentSprite {
         }
     }
 
+
+    public Image getImage() {
+        return image;
+    }
 
     // Resets the instances of GameImages after the bird has died
     // index 0 means that it is the 1st instance of Ground in GameImages

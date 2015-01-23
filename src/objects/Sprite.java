@@ -21,8 +21,12 @@ import java.io.IOException;
 public class Sprite {
 
     public Image image;
-    public int x, y, width, height;
+    protected int x, y, width, height;
 
+
+    public Image getImage() {
+        return image;
+    }
 
 
     // Sets a Sprite's image instance to an Image from a file whose name is given in the string parameter

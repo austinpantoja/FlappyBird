@@ -11,13 +11,14 @@ import java.util.ArrayList;
  *
  * To increase learning speed multiples instances of Bird could be used.  This could be done with only minor changes
  * by replacing Bird bird with ArrayList<Bird> birds, and updating the methods to iterate across the list.
+ *
  */
 
 public class GameImages {
 
 
     // Holds all of the non-bird games objects so that they can be easily iterated through to update, render, and detect collisions
-    protected ArrayList<EnvironmentSprite> images;
+    protected ArrayList<Collidable> collidables;
     protected Bird bird;
     protected Background background;
 
@@ -25,11 +26,11 @@ public class GameImages {
     // All of the file reading from the img folder is called from this constructor
     public GameImages() {
         //The image files themselves are loaded from the Sprite class
-        images = new ArrayList<EnvironmentSprite>();
-        images.add(new Pipes("img/pipes.png"));
-        images.add(new Pipes(images.get(images.size()-1).image));
-        images.add(new Ground("img/ground.png"));
-        images.add(new Ground(images.get(images.size()-1).image));
+        collidables = new ArrayList<Collidable>();
+        collidables.add(new Pipes("img/pipes.png"));
+        collidables.add(new Pipes(collidables.get(collidables.size()-1).getImage()));
+        collidables.add(new Ground("img/ground.png"));
+        collidables.add(new Ground(collidables.get(collidables.size()-1).getImage()));
         bird = new Bird("img/bird.png");
         background = new Background("img/background.png");
     }
@@ -37,8 +38,8 @@ public class GameImages {
 
     // Updates all Sprite instances by looping through the images array
     protected void update() {
-        for (EnvironmentSprite sprite : images)
-            sprite.update();
+        for (Collidable collidable : collidables)
+            collidable.update();
         bird.update();
     }
 
@@ -46,7 +47,7 @@ public class GameImages {
     // Renders all games images
     protected void render(Graphics2D g) {
         background.render(g);
-        for (Sprite sprite : images) sprite.render(g);
+        for (Collidable collidable : collidables) collidable.render(g);
         bird.render(g);
         g.setFont(new Font("Comic Sans MS", Font.BOLD, 32)); //Comic sans because I enjoy watching the world burn
         g.drawString(Integer.toString(bird.score), 215, 685);
@@ -63,15 +64,15 @@ public class GameImages {
 
     // Checks to see if the bird is still alive
     protected boolean stillAlive() {
-        for (EnvironmentSprite sprite : images)
-            sprite.birdCollided(bird);
+        for (Collidable collidable : collidables)
+            collidable.birdCollided(bird);
         return bird.alive;
     }
 
 
     // Resets all relevant objects after the bird dies
     protected void reset() {
-        for (int i = 0; i < images.size(); i++) images.get(i).reset(i%2);
+        for (int i = 0; i < collidables.size(); i++) collidables.get(i).reset(i%2);
         bird.reset();
     }
 }
