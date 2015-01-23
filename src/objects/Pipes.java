@@ -18,8 +18,8 @@ public class Pipes extends EnvironmentSprite {
         readImage(fileName);
         width = image.getWidth(null);
         height = image.getHeight(null);
-        setRandomY();
         x = 450;
+        setRandomY();
         velocity = -2;
 
     }

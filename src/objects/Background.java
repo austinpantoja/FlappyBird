@@ -7,11 +7,11 @@ package objects;
 public class Background extends Sprite {
 
     public Background(String fileName) {
-        x = 0;
-        y = 0;
         readImage(fileName);
         width = image.getWidth(null);
         height = image.getHeight(null);
+        x = 0;
+        y = 0;
     }
 
 }
