@@ -6,6 +6,7 @@ import java.util.Random;
 /**
  * Created by austin on 1/21/15.
  */
+
 public class Pipes extends EnvironmentSprite {
 
     // Used to assign random y values for pipes
@@ -39,7 +40,6 @@ public class Pipes extends EnvironmentSprite {
 
 
 
-
     // The ground moves from the right to the left side of the screen at -(velocity) pixels per update.
     // Once the instance of Pipes has exited the screen, it is placed to the right of the screen and given a new height
     public void update() {
@@ -61,6 +61,7 @@ public class Pipes extends EnvironmentSprite {
                 bird.score++;
         }
     }
+
 
     // Resets the instances of GameImages after the bird has died
     // index 0 means that it is the 1st instance of Ground in GameImages
