@@ -8,31 +8,35 @@ import java.io.IOException;
 
 /**
  * Created by austin on 1/21/15.
+ *
+ * All objects that are rendered extend Sprite
+ * EnvironmentSprite, Background, and Bird extend Sprite directly
+ * Ground and Pipes extend EnvironmentSprite
+ *
+ * Note that, in java, the origin for the coordinates (x,y) is in the top left corner.
+ * i.e. The positive x axis points rightward, and the positive y axis points downward.
  */
 
 
-public abstract class Sprite {
+public class Sprite {
 
-    // The image that will actually render when game FlappyBird calls render(Graphics2D g)
-    // If you would like to animate a particular on screen object you could hold an ArrayList<Image> that image could
-    //      be set to in the update call
     public Image image;
-    // Give the position x, y that the object will be rendered on the screen
-    // The origin is the top left corner in java with the positive y going downward
     public int x, y, width, height;
 
 
-    // Has to be implemented in each class extending Sprite
-    public abstract void update(int dt);
-    // Shouldn't have had Bird extending Sprite, now all of the objects extending Sprite have to have a pointless flap method
-    public abstract void flap();
 
-
+    // Sets a Sprite's image instance to an Image from a file whose name is given in the string parameter
     public void readImage(String fileName) {
         try {
             image = ImageIO.read(new File(fileName));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+
+    // Draws a Sprite's image instance to a Graphics2D object
+    public void render(Graphics2D g) {
+        g.drawImage(image, x, y, null);
     }
 }

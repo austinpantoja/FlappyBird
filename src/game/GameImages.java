@@ -8,74 +8,71 @@ import java.util.ArrayList;
 
 /**
  * Created by austin on 1/21/15.
+ *
+ * To increase learning speed multiples instances of Bird could be used.  This could be done with only minor changes
+ * by replacing Bird bird with ArrayList<Bird> birds, and updating the methods to iterate across the list.
  */
 
 public class GameImages {
 
 
-    // Holds all of the games objects so that they can be easily iterated through to update and render
-    protected ArrayList<Sprite> images;
+    // Holds all of the non-bird games objects so that they can be easily iterated through to update, render, and detect collisions
+    protected ArrayList<EnvironmentSprite> images;
+    protected Bird bird;
+    protected Background background;
 
+
+    // All of the file reading from the img folder is called from this constructor
     public GameImages() {
-        //Load all game images here
-        //The image files themselves are loaded from the objects.Sprite
-        images = new ArrayList<Sprite>();
-        images.add(new Background("img/background.png"));
-        images.add(new Pipes("img/pipes.png", 0));
-        images.add(new Pipes("img/pipes.png", 1));
-        images.add(new Bird("img/bird.png")); // The Bird's index is 3
-        images.add(new Ground("img/ground.png", 0));
-        images.add(new Ground("img/ground.png", 1));
+        //The image files themselves are loaded from the Sprite class
+        images = new ArrayList<EnvironmentSprite>();
+        images.add(new Pipes("img/pipes.png"));
+        images.add(new Pipes(images.get(images.size()-1).image));
+        images.add(new Ground("img/ground.png"));
+        images.add(new Ground(images.get(images.size()-1).image));
+        bird = new Bird("img/bird.png");
+        background = new Background("img/background.png");
     }
 
 
-    // Updates all objects.Sprite instances by looping through the images array
-    protected void update(int dt) {
-        for (Sprite sprite : images) {
-            sprite.update(dt);
-        }
+    // Updates all Sprite instances by looping through the images array
+    protected void update() {
+        for (EnvironmentSprite sprite : images)
+            sprite.update();
+        bird.update();
     }
 
 
     // Renders all games images
     protected void render(Graphics2D g) {
-        for (Sprite sprite : images)
-            g.drawImage(sprite.image, sprite.x, sprite.y, null);
+        background.render(g);
+        for (Sprite sprite : images) sprite.render(g);
+        bird.render(g);
+        g.setFont(new Font("Comic Sans MS", Font.BOLD, 32)); //Comic sans because I enjoy watching the world burn
+        g.drawString(Integer.toString(bird.score), 215, 685);
     }
 
 
-    // Method is called from keyAdapter and mouseAdapter event handler's
+    // Method is called from keyAdapter and mouseAdapter event handlers
     // Calls the Bird's flap method
     protected void flap() {
-        images.get(3).flap(); // 3 is the index of the Bird Instance
+        bird.flap();
     }
 
 
 
-    // images.get(1) and images.get(2) are the 2 instances of Pipes
-    // images.get(3) is the Bird instance
-    // 2 is the number of pixels moved every update cycle "velocity"
-    // This checks if the bird moved fully in between 2 pipes in the last update cycle
-    protected boolean scoreIncreased() {
-        return (images.get(1).x >= images.get(3).x && images.get(1).x-2 < images.get(3).x) ||
-                (images.get(2).x >= images.get(3).x && images.get(2).x-2 < images.get(3).x);
+    // Checks to see if the bird is still alive
+    protected boolean stillAlive() {
+        for (EnvironmentSprite sprite : images)
+            sprite.birdCollided(bird);
+        return bird.alive;
     }
 
 
-    // Checks to see if the bird died
-    protected boolean deathCheck() {
-        // Checking if Bird collided with ground
-        if (images.get(3).y + images.get(3).height > images.get(4).y) return true;
-        // Checking if Bird collided with pipes at index 2
-        if (images.get(3).x + images.get(3).width > images.get(2).x && images.get(3).x < images.get(2).x + images.get(2).width)
-            if (images.get(3).y < images.get(2).y + 450 || images.get(3).y + images.get(3).height > images.get(2).y + 600)
-                return true;
-        // Checking if Bird collided with pipes at index 1
-        if (images.get(3).x + images.get(3).width > images.get(1).x && images.get(3).x < images.get(1).x + images.get(1).width)
-            if (images.get(3).y < images.get(1).y + 450 || images.get(3).y + images.get(3).height > images.get(1).y + 600)
-                return true;
-        return false;
+    // Resets all relevant objects after the bird dies
+    protected void reset() {
+        for (int i = 0; i < images.size(); i++) images.get(i).reset(i%2);
+        bird.reset();
     }
-
 }
 

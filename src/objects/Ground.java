@@ -1,32 +1,63 @@
 package objects;
 
+import java.awt.*;
+
 /**
  * Created by austin on 1/21/15.
  */
-public class Ground extends Sprite {
 
-    // velocity gives the amount of pixels shifted every time update is called
-    private int velocity;
+public class Ground extends EnvironmentSprite {
 
-    // xpos = 0 or 1
-    // This signifies whether it is the 1st or 2nd instance of ground
-    // 2 instances of ground will scroll across the screen,
-    //   once an instance has passed it will be placed just past the other
 
-    public Ground(String fileName, int xpos) {
+    // Used for the first Ground instance in GameImages
+    // x value is set for the left side of the screen
+    public Ground(String fileName) {
         readImage(fileName);
         width = image.getWidth(null);
         height = image.getHeight(null);
         velocity = -2;
-        x = (xpos == 0) ? 0 : width;
+        x = 0;
         y = 600;
     }
 
 
-    public void update(int dt) {
+    // Used for the second Ground instance in GameImages
+    // Will be initially placed off screen just to the right of the first instance
+    // Using this constructor also allows GameImages for not need to read the same file twice
+    public Ground(Image img) {
+        image = img;
+        width = image.getWidth(null);
+        height = image.getHeight(null);
+        velocity = -2;
+        x = width;
+        y = 600;
+    }
+
+
+
+    // The ground moves from the right to the left side of the screen at -(velocity) pixels per update.
+    // Once the instance of Ground has exited the screen, it is placed to the right of the other instance
+    public void update() {
         x += velocity;
         if (x < -1*width) x += 2*width;
     }
 
-    public void flap() {} //objects.Ground doesn't flap
+
+    // Detects if the bird has touched the ground
+    // Also keeps the bird from falling into the ground
+    public void birdCollided(Bird bird) {
+        if (bird.y + bird.height >= y) {
+            bird.y = y - bird.height;
+            bird.alive = false;
+        }
+    }
+
+
+    // Resets the instances of GameImages after the bird has died
+    // index 0 means that it is the 1st instance of Ground in GameImages
+    // index 1 means that it is the 2nd instance of Ground in GameImages
+    public void reset(int index) {
+        x = (index == 0) ? 0 : width;
+    }
+
 }

@@ -19,7 +19,6 @@ public class FlappyBird implements Runnable {
     private JFrame frame;
     private boolean running;
     private GameImages gameImages;
-    private int score;
 
     private static final int HEIGHT = 720, WIDTH = HEIGHT*10/16; //Gives the screen an aspect ratio of 10x16
     private static final int UPS = 60; // Sets the amout of times the game updates per second
@@ -27,7 +26,6 @@ public class FlappyBird implements Runnable {
 
 
     public FlappyBird() {
-        score = 0;
         running = true;
         gameImages = new GameImages();
         frame = new JFrame("Crappy Bird"); //I'll admit I stole this name from someone else on the internet
@@ -74,27 +72,21 @@ public class FlappyBird implements Runnable {
 
     // Contains the game running loop that continuously calls render and update when appropriate
     public void run() {
-        long currentTime, lastTime = System.currentTimeMillis();
+        long currentTime, lastTime = System.currentTimeMillis(), delta = 1000/UPS;
 
         while (running) {
             currentTime = System.currentTimeMillis();
-
-            // UPS = updates per second.  1000/UPS = the amount of time in milliseconds between updates
-            if (currentTime - lastTime >= 1000/UPS) {
-                //casting to int because this all objects in the game will take this parameter and
-                //  using an int is easier and faster.  It should also be only ~(1000/60)
-                update((int)(currentTime-lastTime));
+            // UPS = updates per second.  delta = 1000/UPS = the amount of time in milliseconds between updates
+            if (currentTime - lastTime >= delta) {
+                update();
                 lastTime = currentTime;
             }
-
-            // Is set so that it will render as many FPS as possible
             render();
-
             // I added this in so that the game wasn't so CPU intensive
-            // It sleeps the thread for 3/5 of time required for an update cycle
-            if (currentTime - lastTime < 1000/UPS/5) {
+            // It sleeps the thread for 2/5 of time required for an update cycle
+            if (currentTime - lastTime < delta/5) {
                 try {
-                    Thread.sleep(3000/UPS/5);
+                    Thread.sleep(2*delta/5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -109,8 +101,6 @@ public class FlappyBird implements Runnable {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT); //Clears the previous frame
         gameImages.render(g); //Draws all of the images in gameImages instance ArrayList<Sprite>
-        g.setFont(new Font("Comic Sans MS", Font.BOLD, 32)); //Comic sans because I enjoy watching the world burn
-        g.drawString(Integer.toString(score), 215, 685);
         g.dispose();
         bs.show();
     }
@@ -118,19 +108,17 @@ public class FlappyBird implements Runnable {
 
 
     //Takes in a parameter dt giving how long since the last update in milliseconds
-    public void update(int dt) {
-        if (gameImages.deathCheck()) reset();
-        gameImages.update(dt);
-        if (gameImages.scoreIncreased()) score++;
+    public void update() {
+        if (!gameImages.stillAlive()) reset();
+        gameImages.update();
     }
 
 
 
+    // Resets all the relevant gameImages instances after the bird dies,
+    //      then pauses for 2 seconds before beginning again
     public void reset() {
-        // This is a really crappy implementation as it reloads all of the images from their source files.
-        // ToDO create abstrat reset method in Sprite, then call it on all objects in gameImages to reset
-        gameImages = new GameImages();
-        score = 0;
+        gameImages.reset();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
